@@ -34,7 +34,7 @@ plots/k%_cdr.png: data/k%_data.csv plot_cdr.p plots/
 	gnuplot -e "outputfile='$@'" -e "inputfile='$<'" plot_cdr.p
 plots/k%_mu.png: data/k%_data.csv plot_mu.p plots/
 	gnuplot -e "outputfile='$@'" -e "inputfile='$<'" plot_mu.p
-plots/k%_rho.png: data/k%_rho.csv plot_rho.p plots/
+plots/k%_rho.png: data/k%_data.csv plot_rho.p plots/
 	gnuplot -e "outputfile='$@'" -e "inputfile='$<'" plot_rho.p
 
 
