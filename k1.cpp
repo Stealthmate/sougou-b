@@ -37,7 +37,7 @@ int main() {
   for(unsigned int i = 0; i < N; i++) {
     std::cout << i
          << ","
-         << ah_m->attempts[i].machine
+         << ah_m->attempts[i].machine + 1
          << ","
          << ar_m->avg_reward[i]
          << ","
