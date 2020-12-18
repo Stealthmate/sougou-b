@@ -1,5 +1,5 @@
 MT_FILES=$(addprefix src/,mt.h mt.c)
-LIBRARY_SOURCES=$(addprefix src/,Simulation.cpp Strategy.cpp RandomStrategy.cpp Metrics.cpp SlotMachine.cpp EpsilonGreedyStrategy.cpp SoftmaxStrategy.cpp)
+LIBRARY_SOURCES=$(addprefix src/,Simulation.cpp Strategy.cpp RandomStrategy.cpp Metrics.cpp SlotMachine.cpp EpsilonGreedyStrategy.cpp SoftmaxStrategy.cpp UCBStrategy.cpp Kadai.cpp)
 
 %.o: %.cpp %.hpp
 	g++ $<
@@ -31,11 +31,15 @@ plots/%/mu.png: data/%.csv gnuplot/plot_mu.p
 plots/%/rho.png: data/%.csv gnuplot/plot_rho.p
 	mkdir -p plots/$*
 	gnuplot -e "outputfile='$@'" -e "inputfile='$<'" gnuplot/plot_rho.p
+plots/%/F.png: data/%.csv gnuplot/plot_F.p
+	mkdir -p plots/$*
+	gnuplot -e "outputfile='$@'" -e "inputfile='$<'" gnuplot/plot_F.p
 
 
 plot_k1 plot_k2 plot_k3 plot_k4 plot_k5 plot_k6: plot_%: $(addprefix plots/%/,engaged_machines.png avg_reward.png cdr.png)
 plot_k2: plots/k2/mu.png
 plot_k3: plots/k3/rho.png
+plot_k4: plots/k4/F.png
 
 clean:
 	rm -f *.o

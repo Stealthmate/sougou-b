@@ -18,6 +18,7 @@ class Metric {
 public:
   virtual void initialize(const Simulation &sim, const Strategy &strat, unsigned int n);
   virtual void update(unsigned int i, const Attempt &a) =0;
+  virtual std::string print(unsigned int i) =0;
 };
 
 class Simulation {

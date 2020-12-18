@@ -4,6 +4,8 @@
 
 #include "mt.h"
 
+#include "Util.hpp"
+
 EpsilonGreedyStrategy::EpsilonGreedyStrategy(unsigned int machines, double epsilon): Strategy(machines), epsilon(epsilon) {}
 
 void EpsilonGreedyStrategy::reset() {
@@ -24,13 +26,7 @@ unsigned int EpsilonGreedyStrategy::pick() {
   if(explore) {
     this->current_pick = genrand64_int63() % this->machines;
   } else {
-    double max_mu = -1;
-    for(unsigned int i= 0 ; i < this->mu.size(); i++) {
-      if(this->mu[i] > max_mu) {
-        max_mu = this->mu[i];
-        this->current_pick = i;
-      }
-    }
+    this->current_pick = argmax(this->mu);
   }
 
   std::cerr << "Chose " << this->current_pick << std::endl;
