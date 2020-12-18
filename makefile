@@ -36,7 +36,7 @@ plots/%/F.png: data/%.csv gnuplot/plot_F.p
 	gnuplot -e "outputfile='$@'" -e "inputfile='$<'" gnuplot/plot_F.p
 
 
-plot_k1 plot_k2 plot_k3 plot_k4 plot_k5 plot_k6: plot_%: $(addprefix plots/%/,engaged_machines.png avg_reward.png cdr.png)
+plot_k1 plot_k2 plot_k3 plot_k4: plot_%: $(addprefix plots/%/,engaged_machines.png avg_reward.png cdr.png)
 plot_k2: plots/k2/mu.png
 plot_k3: plots/k3/rho.png
 plot_k4: plots/k4/F.png
@@ -44,7 +44,7 @@ plot_k4: plots/k4/F.png
 clean:
 	rm -f *.o
 	rm -f mt
-	rm -f k1 k2 k3
+	rm -f k1 k2 k3 k4
 	rm -rf data
 	rm -rf plots
 
