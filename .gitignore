@@ -1,5 +1,3 @@
-k1
-k2
-k3
-*.png
-*.csv
+bin
+data
+plots
