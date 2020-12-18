@@ -1,46 +1,41 @@
-MT_FILES=mt.h mt.c
+MT_FILES=$(addprefix src/,mt.h mt.c)
+LIBRARY_SOURCES=$(addprefix src/,Simulation.cpp Strategy.cpp RandomStrategy.cpp Metrics.cpp SlotMachine.cpp EpsilonGreedyStrategy.cpp SoftmaxStrategy.cpp)
 
-LIBRARY_SOURCES=Simulation.cpp Strategy.cpp RandomStrategy.cpp Metrics.cpp SlotMachine.cpp EpsilonGreedyStrategy.cpp SoftmaxStrategy.cpp
 %.o: %.cpp %.hpp
 	g++ $<
 
-mt: ${MT_FILES} mt_main.c
-	gcc -o mt $^
+bin/mt: $(MT_FILES) mt_main.c
+	mkdir -p bin
+	gcc -o $@ $^
 
+bin/k%: src/k%.cpp $(LIBRARY_SOURCES) $(MT_FILES)
+	mkdir -p bin
+	g++ -o $@ $^
 
-k1: k1.cpp ${LIBRARY_SOURCES} ${MT_FILES}
-	g++ -o k1 $^
-
-k2: k2.cpp ${LIBRARY_SOURCES} ${MT_FILES}
-	g++ -o k2 $^
-
-k3: k3.cpp ${LIBRARY_SOURCES} ${MT_FILES}
-	g++ -o k3 $^
-
-data/:
+data/%.csv: bin/%
 	mkdir -p data
+	$< > $@
 
-data/k%_data.csv: k% data/
-	./k$* > $@
+plots/%/engaged_machines.png: data/%.csv gnuplot/plot_engaged_machines.p
+	mkdir -p plots/$*
+	gnuplot -e "outputfile='$@'" -e "inputfile='$<'" gnuplot/plot_engaged_machines.p
+plots/%/avg_reward.png: data/%.csv gnuplot/plot_avg_reward.p
+	mkdir -p plots/$*
+	gnuplot -e "outputfile='$@'" -e "inputfile='$<'" gnuplot/plot_avg_reward.p
+plots/%/cdr.png: data/%.csv gnuplot/plot_cdr.p
+	mkdir -p plots/$*
+	gnuplot -e "outputfile='$@'" -e "inputfile='$<'" gnuplot/plot_cdr.p
+plots/%/mu.png: data/%.csv gnuplot/plot_mu.p
+	mkdir -p plots/$*
+	gnuplot -e "outputfile='$@'" -e "inputfile='$<'" gnuplot/plot_mu.p
+plots/%/rho.png: data/%.csv gnuplot/plot_rho.p
+	mkdir -p plots/$*
+	gnuplot -e "outputfile='$@'" -e "inputfile='$<'" gnuplot/plot_rho.p
 
-plots/:
-	mkdir -p plots
 
-plots/k%_engaged_machines.png: data/k%_data.csv plot_engaged_machines.p plots/
-	gnuplot -e "outputfile='$@'" -e "inputfile='$<'" plot_engaged_machines.p
-plots/k%_avg_reward.png: data/k%_data.csv plot_avg_reward.p plots/
-	gnuplot -e "outputfile='$@'" -e "inputfile='$<'" plot_avg_reward.p
-plots/k%_cdr.png: data/k%_data.csv plot_cdr.p plots/
-	gnuplot -e "outputfile='$@'" -e "inputfile='$<'" plot_cdr.p
-plots/k%_mu.png: data/k%_data.csv plot_mu.p plots/
-	gnuplot -e "outputfile='$@'" -e "inputfile='$<'" plot_mu.p
-plots/k%_rho.png: data/k%_data.csv plot_rho.p plots/
-	gnuplot -e "outputfile='$@'" -e "inputfile='$<'" plot_rho.p
-
-
-plot_k1 plot_k2 plot_k3 plot_k4 plot_k5 plot_k6: plot_k%: plots/k%_engaged_machines.png plots/k%_avg_reward.png plots/k%_cdr.png
-plot_k2: plots/k2_mu.png
-plot_k3: plots/k3_rho.png
+plot_k1 plot_k2 plot_k3 plot_k4 plot_k5 plot_k6: plot_%: $(addprefix plots/%/,engaged_machines.png avg_reward.png cdr.png)
+plot_k2: plots/k2/mu.png
+plot_k3: plots/k3/rho.png
 
 clean:
 	rm -f *.o
