@@ -32,8 +32,15 @@ plots/k%_avg_reward.png: data/k%_data.csv plot_avg_reward.p plots/
 	gnuplot -e "outputfile='$@'" -e "inputfile='$<'" plot_avg_reward.p
 plots/k%_cdr.png: data/k%_data.csv plot_cdr.p plots/
 	gnuplot -e "outputfile='$@'" -e "inputfile='$<'" plot_cdr.p
+plots/k%_mu.png: data/k%_data.csv plot_mu.p plots/
+	gnuplot -e "outputfile='$@'" -e "inputfile='$<'" plot_mu.p
+plots/k%_rho.png: data/k%_rho.csv plot_rho.p plots/
+	gnuplot -e "outputfile='$@'" -e "inputfile='$<'" plot_rho.p
 
-plot_k1: plots/k1_engaged_machines.png plots/k1_avg_reward.png plots/k1_cdr.png
+
+plot_k1 plot_k2 plot_k3 plot_k4 plot_k5 plot_k6: plot_k%: plots/k%_engaged_machines.png plots/k%_avg_reward.png plots/k%_cdr.png
+plot_k2: plots/k2_mu.png
+plot_k3: plots/k3_rho.png
 
 clean:
 	rm -f *.o
