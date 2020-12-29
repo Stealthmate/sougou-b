@@ -29,6 +29,13 @@ data/k5-stats-sm.csv: bin/k5
 data/k5-stats-ucb.csv: bin/k5
 	bin/k5
 
+data/k6-stats-1.csv: bin/k6
+	bin/k6
+data/k6-stats-2.csv: bin/k6
+	bin/k6
+data/k6-stats-3.csv: bin/k6
+	bin/k6
+
 plots/%/engaged_machines.png: data/%.csv gnuplot/plot_engaged_machines.p
 	mkdir -p plots/$*
 	gnuplot -e "outputfile='$@'" -e "inputfile='$<'" gnuplot/plot_engaged_machines.p
@@ -65,7 +72,7 @@ plot_k2: plots/k2/mu.png
 plot_k3: plots/k3/rho.png
 plot_k4: plots/k4/F.png
 plot_k5: plots/k5/eg_param_avg_reward.png plots/k5/eg_param_cdr.png plots/k5/sm_param_avg_reward.png plots/k5/sm_param_cdr.png plots/k5/ucb_param_avg_reward.png plots/k5/ucb_param_cdr.png plots/k5-stats-eg/avg_reward.png plots/k5-stats-eg/cdr.png plots/k5-stats-sm/avg_reward.png plots/k5-stats-sm/cdr.png plots/k5-stats-ucb/avg_reward.png plots/k5-stats-ucb/cdr.png
-
+plot_k6: plots/k6-stats-1/avg_reward.png plots/k6-stats-1/cdr.png plots/k6-stats-2/avg_reward.png plots/k6-stats-2/cdr.png plots/k6-stats-3/avg_reward.png plots/k6-stats-3/cdr.png
 
 clean:
 	rm -f *.o
