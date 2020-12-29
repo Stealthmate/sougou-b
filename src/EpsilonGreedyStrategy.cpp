@@ -29,8 +29,6 @@ unsigned int EpsilonGreedyStrategy::pick() {
     this->current_pick = argmax(this->mu);
   }
 
-  std::cerr << "Chose " << this->current_pick << std::endl;
-
   return this->current_pick;
 }
 

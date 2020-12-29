@@ -4,13 +4,12 @@
 #include <memory>
 #include <vector>
 
-#include "Strategy.hpp"
-#include "Metrics.hpp"
+#include "SlotMachine.hpp"
+#include "Simulation.hpp"
 
-void run_kadai
-(
- Strategy &sim,
- const std::vector<std::shared_ptr<Metric>> &additional_metrics
- );
+extern const std::vector<SlotMachine> MACHINES;
+extern const unsigned int N;
+
+void print_simulation_results(const SimulationHistory &hist, std::shared_ptr<MachineScoreMonitor> msm = nullptr);
 
 #endif

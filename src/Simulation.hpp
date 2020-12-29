@@ -7,30 +7,38 @@
 #include "SlotMachine.hpp"
 #include "Strategy.hpp"
 
-class Simulation;
-
 struct Attempt {
   bool result;
   unsigned int machine;
 };
 
-class Metric {
-public:
-  virtual void initialize(const Simulation &sim, const Strategy &strat, unsigned int n);
-  virtual void update(unsigned int i, const Attempt &a) =0;
-  virtual std::string print(unsigned int i) =0;
-};
-
-class Simulation {
-public:
-
-  Simulation(std::vector<SlotMachine> machines);
-
-  virtual void run(Strategy &strat, unsigned int n, std::vector<std::shared_ptr<Metric>> metrics) final;
-
-  virtual void on_attempt(const Strategy &start, unsigned int i, const Attempt &a);
-
+struct SimulationHistory {
   std::vector<SlotMachine> machines;
+  unsigned int n;
+  std::vector<Attempt> attempts;
 };
+
+class Monitor {
+public:
+  virtual void initialize(const Strategy &strat, unsigned int n);
+  virtual void monitor_attempt(unsigned int i, const Attempt &attempt);
+};
+
+class MachineScoreMonitor : public Monitor {
+public:
+  virtual void monitor_attempt(unsigned int i, const Attempt &attempt);
+
+  virtual std::vector<double> get_machine_score() =0;
+
+  std::vector<std::vector<double>> score;
+};
+
+SimulationHistory run_single
+(
+ const std::vector<SlotMachine> &machines,
+ Strategy &strat,
+ unsigned int n,
+ std::shared_ptr<Monitor> monitor
+ );
 
 #endif

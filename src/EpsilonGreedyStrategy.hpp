@@ -1,5 +1,5 @@
-#ifndef RANDOM_STRATEGY_HPP
-#define RANDOM_STRATEGY_HPP
+#ifndef EPSILON_GREEDY_STRATEGY_HPP
+#define EPSILON_GREEDY_STRATEGY_HPP
 
 #include "Strategy.hpp"
 

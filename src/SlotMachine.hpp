@@ -5,7 +5,7 @@ class SlotMachine {
  public:
   SlotMachine(double p);
 
-  bool engage();
+  bool engage() const;
 
   double probability() const;
 

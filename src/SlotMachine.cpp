@@ -4,7 +4,7 @@
 
 SlotMachine::SlotMachine(double p): p(p) {}
 
-bool SlotMachine::engage() {
+bool SlotMachine::engage() const {
   return genrand64_real1() < this->p;
 }
 

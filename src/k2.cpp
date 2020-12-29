@@ -2,35 +2,26 @@
 #include "Metrics.hpp"
 #include "Kadai.hpp"
 #include "Util.hpp"
+#include "Experiment.hpp"
 
-class MuMetric: public Metric {
+class MuMonitor: public MachineScoreMonitor {
 public:
-
-  virtual void initialize(const Simulation &sim, const Strategy &strat, unsigned int n) {
-    this->machines = sim.machines.size();
-    this->mu = std::vector<std::vector<double>>(n, std::vector<double>(this->machines, 0));
+  virtual void initialize(const Strategy &strat, unsigned int n) {
     this->strat = dynamic_cast<const EpsilonGreedyStrategy*>(&strat);
   }
 
-  virtual void update(unsigned int i, const Attempt &a) {
-    (void) a;
-    this->mu[i] = std::vector<double>(this->strat->mu);
-  }
-
-  virtual std::string print(unsigned int i) {
-    return join(",", this->mu[i]);
+  virtual std::vector<double> get_machine_score() {
+    return this->strat->mu;
   }
 
   const EpsilonGreedyStrategy *strat;
-  std::vector<std::vector<double>> mu;
-  unsigned int machines;
 };
 
 int main() {
 
   const double EPSILON = 0.8;
+  std::shared_ptr<MuMonitor> mon = std::make_shared<MuMonitor>();
+  auto hist = run_epsilon_greedy(MACHINES, N, EPSILON, std::static_pointer_cast<Monitor>(mon));
 
-  auto egs = EpsilonGreedyStrategy(5, EPSILON);
-  auto mu_m = std::make_shared<MuMetric>();
-  run_kadai(egs, {mu_m});
+  print_simulation_results(hist, mon);
 }

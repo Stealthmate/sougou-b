@@ -3,30 +3,11 @@
 
 #include "Simulation.hpp"
 
-class AttemptHistoryMetric: public Metric {
-public:
-  virtual void update(unsigned int i, const Attempt &a);
-  virtual std::string print(unsigned int i);
+std::vector<unsigned int> attempt_numbers(const SimulationHistory &hist);
+std::vector<unsigned int> engaged_machines(const SimulationHistory &hist);
+std::vector<double> average_reward(const SimulationHistory &hist);
+std::vector<double> cdr(const SimulationHistory &hist);
 
-  std::vector<Attempt> attempts;
-};
 
-class AverageRewardMetric : public Metric {
-public:
-  virtual void update(unsigned int i, const Attempt &a);
-  virtual std::string print(unsigned int i);
-
-  std::vector<double> avg_reward;
-};
-
-class CDRMetric : public Metric {
-public:
-  virtual void initialize(const Simulation &sim, const Strategy &strat, unsigned int n);
-  virtual void update(unsigned int i, const Attempt &a);
-  virtual std::string print(unsigned int i);
-
-  unsigned int best_machine;
-  std::vector<double> cdr;
-};
 
 #endif
