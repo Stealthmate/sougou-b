@@ -1,0 +1,176 @@
+\documentclass[10pt,a4paper,dvipdfmx]{jsarticle}% 文書クラス
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{bm}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{url}
+
+\markright{\today\hfill 学籍番号　氏名\hspace{10mm}}
+\pagestyle{myheadings}
+\setlength{\textheight}{26.5cm}
+\setlength{\textwidth}{18cm}
+\setlength{\oddsidemargin}{-10mm}
+\setlength{\topmargin}{-20mm}
+
+\def\baselinestretch{0.9}
+
+\graphicspath{{./Figures/}}
+\begin{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 以下タイトル
+\begin{titlepage}
+	\begin{flushleft}
+	{\Large 工学部 情報工学科}
+	\end{flushleft}
+	\vspace{100pt}
+	\begin{center}
+		{\huge 2020年度 情報工学総合演習 事前レポート}\\
+		%{\huge 2020年度 情報工学総合演習 レポート}\\
+		\vspace{40pt}
+		{\huge 演習題目：課題B}\\ \vspace{10pt}
+		{\huge 多腕バンディット問題}\\
+		\vspace{100pt}
+		\begin{table}[hp]
+			\centering \LARGE
+			\begin{tabular}{cl}
+				グ ル ー プ    & G \\
+				学 籍 番 号    & 99TI999 \\
+				氏 名          & 埼玉 太朗 \\
+				演習実施日     & 自： \\
+				               & 至： \\
+				レポート提出日 &  \\
+				担 当 教 員 & 重原，内田，山田，松永，島田，菅野 \\
+			\end{tabular}
+		\end{table}
+		\vfill
+	\end{center}
+\end{titlepage}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% タイトルここまで
+
+\section{概要}
+
+本資料は2020年度情報工学総合演習課題B「多腕バンディット問題」のレポート作成のためのテンプレートである．
+このテンプレートファイルのための Tex ファイルは，WebClass からダウンロードできる．
+課題Bのレポート作成およびファイル提出については，以下の指示に従うこと．
+またレポートは以下の項目について説明する．
+さらに各課題ごとに実験内容，実験結果，考察をまとめて記載せよ．
+
+\ \
+%\shadowbox{%
+\begin{center}
+\parbox{30zw}{%
+\begin{tabular}[t]{rl}
+ 実験内容：& どんな実験をしたのか\\
+ 実験結果：& その実験でどんな結果を得たのか\\
+ 考察：& その結果から何が言えるのか\\
+ 結論：& 演習全体で分かったことのまとめ\\
+ 感想：& 演習課題に対する感想\\
+ (参考文献)：& 演習テキスト以外にもし何か参考にしたなら\\
+\end{tabular}
+}
+\end{center}
+
+\section{結果に用いるグラフの貼付け}
+
+図\ref{fig:example1}にグラフの貼付け例を示す．
+グラフの軸が分かりやすいような大きさで記載する．
+また何を表すグラフであるかわかるようにキャプションをつける．
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.3\textwidth]{./figure/CDRAndReward_ave}
+	\caption{\label{fig:example1}グラフの例．左の縦軸，右の縦軸，横軸が何を表すか説明すると良い．この例のようにキャプションには何を表すグラフであるかを記載する．}
+\end{figure}
+
+図\ref{fig:example2}に minipage を用いた複数グラフの貼付け例を示す．
+例のようにグラフ毎のキャプションと全体のキャプションを記載する．
+
+\begin{figure}[htbp]
+	\centering
+	\begin{minipage}[b]{0.49\textwidth}
+		\centering
+		\includegraphics[width=0.6\textwidth]{./figure/CDRAndReward_ave}
+	\end{minipage}
+	\begin{minipage}[b]{0.49\textwidth}
+		\centering
+		\includegraphics[width=0.6\textwidth]{./figure/CDRAndReward_cdr}
+	\end{minipage}
+	\caption{\label{fig:example2} minipage を用いた複数グラフの貼付けの例．各グラフにキャプションを記載すると良い．}
+\end{figure}
+
+\section{レポートの評価箇所の例}
+
+レポートは，次の点を重視して採点する．
+\begin{enumerate}
+	\item 他人がレポートを読んで，同じ条件の実験を再現できること
+	\item 「到達した結論」，「その結論の根拠となるデータ」，
+			「そのデータからその結論が導かれる理由」が明瞭に示されていること
+	\item レポートの作法を守っていること
+\end{enumerate}
+レポートを提出する前に，それぞれ以下のチェックをすること．
+\begin{enumerate}
+	\item ……数値計算の設定や用いたパラメータ等がすべて明記されているか
+	\item ……上の三点が書かれているか
+%	\item ……テキスト冊子冒頭の「報告書 (レポート) の作成について」を守れているか
+\end{enumerate}
+特に，次のようなレポートは再提出となることがある．
+\begin{itemize}
+	\item 実験条件 (パラメータ設定) に不明な点がある
+	\item グラフの標題 (何のグラフか) や軸ラベル (縦軸・横軸は何の値か)が抜けている
+	\item 有効数字に留意していない
+	\item 資料を参考にしたにもかかわらず明記していない
+	\item 誤字や「てにをは」等のミスが多すぎる
+\end{itemize}
+%
+最後に，その他の注意を挙げる．
+\begin{itemize}
+	\item プログラムや結果の安易なコピーは容易に見破ることが可能である．
+		万が一，コピーしたレポートがあると判断された場合は，
+		コピー元，コピー先両者の点数を原則0点とする．
+
+%  \item 資料を参考にする場合は，その資料の信頼性もよく吟味するように．
+%        いずれにせよ，資料の無批判な丸写しはカンニングと同様に扱います
+%        （たとえ出典を明記していても）．
+%  \item シミュレーションに用いたプログラム群
+%        （Makefile，ソースファイル，スクリプトファイル）は，
+%        各人のホームディレクトリ上に保存してください．
+%        保存場所は演習時の指定に従ってください．
+	\item わからないことがあれば，担当教員とTAに，何でも質問すること．
+
+%        重原研：総合研究棟703室 \quad
+%        池口研：総合研究棟505室 \quad
+%        内田研：情報棟507室
+			 
+\end{itemize}
+
+\section{参考文献について}
+
+参考文献は\cite{TunedURL}のように引用する．
+
+\section{ファイルの提出について}
+
+総合演習のレポート提出は，事前レポートと最終レポートの提出が必要である．
+\begin{itemize}
+	\item 事前レポート\\
+		Texで作成したレポートのPDFファイルを WebClass にて提出する．\\
+		%\href{http://yankee.cv.ics.saitama-u.ac.jp/~kunolab/fukuda/cgi-bin/2019/se/upload.html}{http://yankee.cv.ics.saitama-u.ac.jp/\textasciitilde{}kunolab/fukuda/cgi-bin/2019/se/upload.html}\\
+	\item 最終レポート\\
+		Texで作成したレポートのPDFファイルを WebClass にて提出する．\\
+		さらにシミュレーションに用いたプログラム群 (Makefile，ソースファイル，スクリプトファイル) とレポート作成に用いたファイル (PDF, Tex, 図の eps) を， zip 形式で 1 つにまとめてWebClass経由で提出する．
+\end{itemize}
+
+\bibliographystyle{unsrt}
+\begin{thebibliography}{9}
+
+\bibitem{TunedURL}
+\newblock 多腕バンディットとUCB1で遊ぶ.
+\newblock  Negative/Positive Thinking \url{https://jetbead.hatenablog.com/entry/20120202/1328199150}
+
+\bibitem{TompURL}
+\newblock バンディットアルゴリズム　基本編.
+\newblock  ALBERT Official Blog \url{https://blog.albert2005.co.jp/2017/01/23/}
+\end{thebibliography}
+
+\end{document}
