@@ -5,6 +5,14 @@
 #include "Experiment.hpp"
 #include "Util.hpp"
 
+#include "mt.h"
+
+unsigned long long SEED = 1;
+
+void init(unsigned long long seed) {
+  init_genrand64(seed);
+}
+
 unsigned int best_machine(const std::vector<SlotMachine> &machines) {
   return argmax(vecmap<SlotMachine, double>(machines, [](const SlotMachine &m) -> double { return m.probability(); }));
 }

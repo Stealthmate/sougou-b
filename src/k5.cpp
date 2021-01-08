@@ -117,6 +117,8 @@ void print_stats(const std::vector<std::pair<double, double>> &stats, const std:
 }
 
 int main() {
+  init();
+
   auto eg = analyze(run_epsilon_greedy, 0, 1);
   print_results(eg, "data/k5-eg.csv");
   auto best = find_best(eg);

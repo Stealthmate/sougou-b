@@ -22,7 +22,7 @@ void print_simulation_results(const SimulationHistory &hist, std::shared_ptr<Mac
   std::vector<double> avg_rw = average_reward(hist);
   std::vector<double> cdr_ = cdr(hist);
 
-  for(unsigned int i = 0; i < N; i++) {
+  for(unsigned int i = 0; i < an.size(); i++) {
     std::cout << an[i]
               << "," << em[i]
               << "," << avg_rw[i]

@@ -18,6 +18,7 @@ public:
 };
 
 int main() {
+  init();
 
   const double TAU = 0.5;
   std::shared_ptr<RhoMonitor> mon = std::make_shared<RhoMonitor>();

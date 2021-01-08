@@ -17,6 +17,7 @@ public:
 };
 
 int main() {
+  init();
 
   const double ALPHA = 1.0;
   std::shared_ptr<FMonitor> mon = std::make_shared<FMonitor>();

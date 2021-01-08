@@ -48,6 +48,8 @@ void print_stats(const std::vector<std::pair<double, double>> &stats, const std:
 }
 
 int main() {
+  init();
+
   std::vector<SlotMachine> machines1 =
     {
       SlotMachine(0.3),

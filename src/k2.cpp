@@ -18,6 +18,7 @@ public:
 };
 
 int main() {
+  init();
 
   const double EPSILON = 0.8;
   std::shared_ptr<MuMonitor> mon = std::make_shared<MuMonitor>();

@@ -7,6 +7,10 @@
 #include "UCBStrategy.hpp"
 #include "Simulation.hpp"
 
+extern unsigned long long SEED;
+
+void init(unsigned long long seed = SEED);
+
 unsigned int best_machine(const std::vector<SlotMachine> &machines);
 
 SimulationHistory run_random(const std::vector<SlotMachine> &machines, unsigned int N, std::shared_ptr<Monitor> monitor);
