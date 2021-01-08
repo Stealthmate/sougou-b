@@ -1,0 +1,158 @@
+LIBRARY_SOURCES = [
+  'Simulation.cpp',
+  'Strategy.cpp',
+  'RandomStrategy.cpp',
+  'Metrics.cpp',
+  'SlotMachine.cpp',
+  'EpsilonGreedyStrategy.cpp',
+  'SoftmaxStrategy.cpp',
+  'UCBStrategy.cpp',
+  'Kadai.cpp',
+  'Experiment.cpp'
+].map {|x| 'src/' + x }
+
+MT_FILES = [
+  'mt.h',
+  'mt.c'
+].map {|x| 'src/' + x }
+
+rule ".o" => [".cpp", ".hpp"] do |t|
+  sh "g++ #{t.prerequisites.join(' ')}"
+end
+
+
+# bin/k%
+rule(/bin\/k([0-9])$/ => [
+       proc {|task_name| [
+               task_name.sub('bin/', 'src/') + '.cpp'
+             ]},
+       *LIBRARY_SOURCES,
+       *MT_FILES
+     ]) do |t|
+  sh "g++ -o #{t.name} #{t.prerequisites.join(' ')}"
+end
+
+def mkplotdep(r)
+  [
+    proc {|tn| "plots/#{tn.match(r)[:data]}" },
+    proc {|tn| "data/#{tn.match(r)[:data]}.csv" },
+    proc {|tn| "gnuplot/plot_#{tn.match(r)[:plot]}.p" },
+    'gnuplot/common.p'
+  ]
+end
+
+def mkplot(t)
+  sh "gnuplot -e \"outputfile='#{t.name}'\" -e \"inputfile='#{t.prerequisites[1]}'\" #{t.prerequisites[2]}"
+end
+
+# K1-4
+K14_DATA_REGEX = /^data\/(k[1-4])\.csv/
+rule(K14_DATA_REGEX => [
+       proc {|tn| "bin/#{tn.match(K14_DATA_REGEX).captures[0]}"}
+     ]) do |t|
+  sh "#{t.prerequisites[0]} > #{t.name}"
+end
+
+directory "plots/k1"
+directory "plots/k2"
+directory "plots/k3"
+directory "plots/k4"
+K14_PLOT_REGEX = /plots\/(?<data>k[1-4])\/(?<plot>.+)\.pdf/
+rule(K14_PLOT_REGEX => mkplotdep(K14_PLOT_REGEX)) do |t|
+  mkplot(t)
+end
+
+# K5
+rule(/^data\/k5-.+\.csv/ => [ 'bin/k5' ]) do |t|
+  sh "#{t.prerequisites[0]}"
+end
+directory "plots/k5-eg"
+directory "plots/k5-sm"
+directory "plots/k5-ucb"
+K5_PLOT_REGEX = /plots\/(?<data>k5-(eg|sm|ucb))\/(?<plot>.+)\.pdf/
+rule(K5_PLOT_REGEX => [
+       proc { |tn| "plots/#{tn.match(K5_PLOT_REGEX)[:data]}" },
+       proc { |tn| "data/#{tn.match(K5_PLOT_REGEX)[:data]}.csv" },
+       proc { |tn| "gnuplot/plot_#{tn.match(K5_PLOT_REGEX)[:plot]}.p" },
+       'gnuplot/common.p'
+     ]) do |t|
+  param = {
+    "eg" => "Epsilon",
+    "sm" => "Rho",
+    "ucb" => "Alpha"
+  }[t.name.match(K5_PLOT_REGEX).captures[0]]
+  sh "gnuplot -e \"outputfile='#{t.name}'\" -e \"inputfile='#{t.prerequisites[1]}'\" -e \"parameter='#{param}'\" #{t.prerequisites[2]}"
+end
+
+directory "plots/k5-stats-eg"
+directory "plots/k5-stats-sm"
+directory "plots/k5-stats-ucb"
+K5_STATS_PLOT_REGEX = /plots\/(?<data>k5-stats-[a-z]+)\/(?<plot>.+)\.pdf/
+rule(K5_STATS_PLOT_REGEX => mkplotdep(K5_STATS_PLOT_REGEX)) do |t|
+  mkplot(t)
+end
+
+# K6
+rule(/^data\/k6-.+\.csv/ => [ 'bin/k6' ]) do |t|
+  sh "#{t.prerequisites[0]}"
+end
+directory "plots/k6-stats-1"
+directory "plots/k6-stats-2"
+directory "plots/k6-stats-3"
+K6_REGEX = /plots\/(?<data>k6-stats-[1-3])\/(?<plot>.+)\.pdf/
+rule(K6_REGEX => mkplotdep(K6_REGEX)) do |t|
+  mkplot(t)
+end
+
+def k14plots(k)
+  [ 'engaged_machines', 'avg_reward', 'cdr' ].map { |x| "plots/#{k}/#{x}.pdf" }
+end
+
+def k5plots(s)
+  [
+    *([ 'avg_reward', 'cdr' ].map { |x| "plots/k5-#{s}/param_#{x}.pdf" }),
+    *([ 'avg_reward', 'cdr' ].map { |x| "plots/k5-stats-#{s}/#{x}.pdf" })
+  ]
+end
+
+def k6plots(p)
+  [ 'avg_reward', 'cdr' ].map {|x| "plots/k6-stats-#{p}/#{x}.pdf" }
+end
+
+task k1: k14plots('k1')
+task k2: [ *k14plots('k2'), 'plots/k2/mu.pdf' ]
+task k3: [ *k14plots('k3'), 'plots/k3/rho.pdf' ]
+task k4: [ *k14plots('k4'), 'plots/k4/F.pdf' ]
+task k5: [ *k5plots('eg'), *k5plots('sm'), *k5plots('ucb') ]
+task k6: [ *k6plots('1'), *k6plots('2'), *k6plots('3') ]
+
+multitask 'report/rp.dvi' => [
+       'report/rp.tex',
+       :k1,
+       :k2,
+       :k3,
+       :k4,
+       :k5,
+       :k6
+     ] do |t|
+  sh "cd report && texliveonfly -c platex -a \"-halt-on-error\" rp"
+end
+
+file 'report/rp.pdf' => 'report/rp.dvi' do |t|
+  sh "cd report && dvipdfmx rp"
+end
+
+
+task :clean_bin do |t|
+  sh "rm -f bin/k1 bin/k2 bin/k3 bin/k4"
+end
+
+task :clean_data do |t|
+  sh "rm -f data/k1.csv data/k2.csv data/k3.csv data/k4.csv"
+end
+
+task :clean_plots do |t|
+  sh "rm -f plots/k1/*.pdf plots/k2/*.pdf plots/k3/*.pdf plots/k4/*.pdf"
+end
+
+task clean: [:clean_bin, :clean_data, :clean_plots]
