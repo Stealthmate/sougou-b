@@ -11,6 +11,8 @@ public:
   virtual void accept_result(bool result);
   virtual void calculate_F();
 
+  virtual unsigned int current_best();
+
   double alpha;
   std::vector<unsigned int> trials;
   std::vector<double> mu;

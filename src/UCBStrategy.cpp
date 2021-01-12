@@ -54,3 +54,16 @@ void UCBStrategy::accept_result(bool result) {
   this->calculate_F();
   this->n += 1;
 }
+
+unsigned int UCBStrategy::current_best() {
+  unsigned int j = 0;
+  double max_mu = -1;
+  for(unsigned int i = 0; i < this->machines; i++) {
+    if(this->mu[i] > max_mu) {
+      max_mu = this->mu[i];
+      j = i;
+    }
+  }
+
+  return j;
+}

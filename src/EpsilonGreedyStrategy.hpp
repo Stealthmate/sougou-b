@@ -10,6 +10,8 @@ public:
   virtual unsigned int pick();
   virtual void accept_result(bool result);
 
+  virtual unsigned int current_best();
+
   double epsilon;
   std::vector<unsigned int> trials;
   std::vector<double> mu;

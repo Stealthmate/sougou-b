@@ -13,6 +13,8 @@ public:
   virtual unsigned int pick() =0;
   virtual void accept_result(bool result);
 
+  virtual unsigned int current_best() =0;
+
 protected:
   unsigned int machines;
 };

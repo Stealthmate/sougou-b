@@ -8,7 +8,8 @@ LIBRARY_SOURCES = [
   'SoftmaxStrategy.cpp',
   'UCBStrategy.cpp',
   'Kadai.cpp',
-  'Experiment.cpp'
+  'Experiment.cpp',
+  'KadaiAdvanced.cpp'
 ].map {|x| 'src/' + x }
 
 MT_FILES = [
@@ -104,6 +105,61 @@ rule(K6_REGEX => mkplotdep(K6_REGEX)) do |t|
   mkplot(t)
 end
 
+# KADV1
+KADV_REGEX = /bin\/kadv-1-([1-3])/
+rule(KADV_REGEX =>
+  [
+    *LIBRARY_SOURCES,
+    *MT_FILES,
+    'src/KadaiAdvanced.hpp',
+    proc {|tn|
+      n = tn.match(KADV_REGEX).captures[0]
+      [
+        "src/kadv-1-#{n}.cpp",
+        "lib/libslot#{n}_18TI018.a"
+      ]
+    },
+  ]) do |t|
+  sh "g++ -o #{t.name} #{t.prerequisites.join(' ')}"
+end
+KADV_DATA_REGEX = /data\/kadv-1-([1-3])\.csv/
+rule(KADV_DATA_REGEX =>
+     [
+       proc { |tn| "bin/kadv-1-#{tn.match(KADV_DATA_REGEX).captures[0]}" }
+     ]) do |t|
+  sh "> #{t.name}"
+  100.times do |i|
+    sh "#{t.prerequisites[0]} | xargs -n3 -d'\n' | sed -E 's/(OPT|CDR|AVG): //g' | sed 's/ /,/g' >> #{t.name}"
+  end
+end
+
+multitask kadv1data:
+            [
+              'data/kadv-1-1.csv',
+              'data/kadv-1-2.csv',
+              'data/kadv-1-3.csv'
+            ]
+
+file "plots/kadv-1/best_machine.pdf" => [
+       'gnuplot/plot_best_machine.p',
+       *Rake::Task[:kadv1data].prerequisites,
+     ] do |t|
+  sh "gnuplot -e \"outputfile='#{t.name}'\" gnuplot/plot_best_machine.p"
+end
+file "plots/kadv-1/adv_avg_reward.pdf" => [
+       'gnuplot/plot_adv_avg_reward.p',
+       *Rake::Task[:kadv1data].prerequisites,
+     ] do |t|
+  sh "gnuplot -e \"outputfile='#{t.name}'\" gnuplot/plot_adv_avg_reward.p"
+end
+file "plots/kadv-1/adv_cdr.pdf" => [
+       'gnuplot/plot_adv_cdr.p',
+       *Rake::Task[:kadv1data].prerequisites,
+     ] do |t|
+  sh "gnuplot -e \"outputfile='#{t.name}'\" gnuplot/plot_adv_cdr.p"
+end
+
+
 def k14plots(k)
   [ 'engaged_machines', 'avg_reward', 'cdr' ].map { |x| "plots/#{k}/#{x}.pdf" }
 end
@@ -126,14 +182,18 @@ task k4: [ *k14plots('k4'), 'plots/k4/F.pdf' ]
 task k5: [ *k5plots('eg'), *k5plots('sm'), *k5plots('ucb') ]
 task k6: [ *k6plots('1'), *k6plots('2'), *k6plots('3') ]
 
-multitask 'report/rp.dvi' => [
-       'report/rp.tex',
-       :k1,
-       :k2,
-       :k3,
-       :k4,
-       :k5,
-       :k6
+multitask kadv1: [ 'best_machine', 'adv_avg_reward', 'adv_cdr' ].map {|x| "plots/kadv-1/#{x}.pdf"}
+
+multitask 'report/rp.dvi' =>
+  [
+    'report/rp.tex',
+     *Rake::Task[:k1].prerequisites,
+     *Rake::Task[:k2].prerequisites,
+     *Rake::Task[:k3].prerequisites,
+     *Rake::Task[:k4].prerequisites,
+     *Rake::Task[:k5].prerequisites,
+     *Rake::Task[:k6].prerequisites,
+     *Rake::Task[:kadv1].prerequisites,
      ] do |t|
   sh "cd report && texliveonfly -c platex -a \"-halt-on-error\" rp"
 end

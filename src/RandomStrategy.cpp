@@ -9,3 +9,7 @@ void RandomStrategy::reset() {}
 unsigned int RandomStrategy::pick() {
   return genrand64_int63() % this->machines;
 };
+
+unsigned int RandomStrategy::current_best() {
+  return this->pick();
+}

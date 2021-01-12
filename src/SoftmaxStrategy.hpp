@@ -11,6 +11,8 @@ public:
   virtual void accept_result(bool result);
   virtual void calculate_rho();
 
+  virtual unsigned int current_best();
+
   double tau;
   std::vector<unsigned int> trials;
   std::vector<double> mu;

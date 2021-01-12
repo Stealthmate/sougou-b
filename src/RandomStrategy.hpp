@@ -8,6 +8,7 @@ public:
   RandomStrategy(unsigned int machines);
   virtual void reset();
   virtual unsigned int pick();
+  virtual unsigned int current_best();
 };
 
 #endif
