@@ -184,7 +184,7 @@ task k6: [ *k6plots('1'), *k6plots('2'), *k6plots('3') ]
 
 multitask kadv1: [ 'best_machine', 'adv_avg_reward', 'adv_cdr' ].map {|x| "plots/kadv-1/#{x}.pdf"}
 
-multitask 'report/rp.dvi' =>
+file 'report/rp.dvi' =>
   [
     'report/rp.tex',
      *Rake::Task[:k1].prerequisites,
@@ -204,6 +204,8 @@ end
 
 file '18TI018-final.zip' =>
      [
+       "rakefile",
+       "README.md",
        *FileList['src/*.cpp', 'src/*.hpp', 'plots/**/*.pdf', 'gnuplot/*.p'],
        "report/rp.tex",
        "report/rp.pdf"
