@@ -1,4 +1,4 @@
-load 'gnuplot/common.p'
+load 'gnuplot/common.gp'
 set xlabel 'Trial Number'
 set ylabel 'CDR'
 set yrange [0:1.1]

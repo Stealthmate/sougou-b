@@ -1,4 +1,4 @@
-load 'gnuplot/common.p'
+load 'gnuplot/common.gp'
 set xlabel 'Trial number'
 set ylabel 'AverageReward'
 set yrange [0:1.1]

@@ -1,4 +1,4 @@
-load 'gnuplot/common.p'
+load 'gnuplot/common.gp'
 set xlabel parameter
 set xtics 0,0.2,1
 set ylabel 'CDR'

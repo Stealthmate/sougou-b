@@ -1,7 +1,8 @@
-load 'gnuplot/common.p'
-set ylabel 'Rho'
+load 'gnuplot/common.gp'
+set key right top
+set ylabel 'F'
 set xlabel 'Trial Number'
-set yrange[0:1.1]
+set yrange[0:2.5]
 plot inputfile using 1:5 with line lw 2, \
      inputfile using 1:6 with line lw 2, \
      inputfile using 1:7 with line lw 2, \

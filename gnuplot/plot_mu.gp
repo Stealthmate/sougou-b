@@ -1,4 +1,5 @@
-load 'gnuplot/common.p'
+load 'gnuplot/common.gp'
+set key right top
 set ylabel 'Mu'
 set xlabel 'Trial Number'
 set yrange[0:1.1]
