@@ -200,22 +200,22 @@ Random を除き各戦略に対し，区間 $P = [0, 1] \subset \R$ から等間
 
 \begin{figure}[H]
 \centering
-\subcaptionbox{正規平均報酬}{\includegraphics[width=\figwidth]{../plots/k5-eg/param_avg_reward.pdf}}
-\subcaptionbox{正規平均正答率}{\includegraphics[width=\figwidth]{../plots/k5-eg/param_cdr.pdf}}
+\subcaptionbox{正規平均報酬}{\includegraphics[width=\figwidth]{../plots/k5-analyze/eg_param_avg_reward.pdf}}
+\subcaptionbox{正規平均正答率}{\includegraphics[width=\figwidth]{../plots/k5-analyze/eg_param_cdr.pdf}}
 \caption{$\epsilon$-greedy 戦略に対するパラメータ評価指標}\label{fig:opt:eg}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\subcaptionbox{正規平均報酬}{\includegraphics[width=\figwidth]{../plots/k5-sm/param_avg_reward.pdf}}
-\subcaptionbox{正規平均正答率}{\includegraphics[width=\figwidth]{../plots/k5-sm/param_cdr.pdf}}
+\subcaptionbox{正規平均報酬}{\includegraphics[width=\figwidth]{../plots/k5-analyze/sm_param_avg_reward.pdf}}
+\subcaptionbox{正規平均正答率}{\includegraphics[width=\figwidth]{../plots/k5-analyze/sm_param_cdr.pdf}}
 \caption{Softmax 戦略に対するパラメータ評価指標}\label{fig:opt:sm}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\subcaptionbox{正規平均報酬}{\includegraphics[width=\figwidth]{../plots/k5-ucb/param_avg_reward.pdf}}
-\subcaptionbox{正規平均正答率}{\includegraphics[width=\figwidth]{../plots/k5-ucb/param_cdr.pdf}}
+\subcaptionbox{正規平均報酬}{\includegraphics[width=\figwidth]{../plots/k5-analyze/ucb_param_avg_reward.pdf}}
+\subcaptionbox{正規平均正答率}{\includegraphics[width=\figwidth]{../plots/k5-analyze/ucb_param_cdr.pdf}}
 \caption{UCB 戦略に対するパラメータ評価指標}\label{fig:opt:ucb}
 \end{figure}
 
@@ -229,8 +229,8 @@ Random を除き各戦略に対し，区間 $P = [0, 1] \subset \R$ から等間
     戦略 & パラメータ &  最適値 \\
     \midrule
     $\epsilon$-greedy & $\epsilon$ & 0.10 \\
-    Softmax & $\tau$ & 0.12 \\
-    UCB & $\alpha$ & 0.18 \\
+    Softmax & $\tau$ & 0.16 \\
+    UCB & $\alpha$ & 0.12 \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -239,17 +239,17 @@ Random を除き各戦略に対し，区間 $P = [0, 1] \subset \R$ から等間
 
 \begin{figure}[H]
 \centering
-\subcaptionbox{$\epsilon$-greedy}{\includegraphics[width=\figwidth]{../plots/k5-stats-eg/avg_reward.pdf}}
-\subcaptionbox{Softmax}{\includegraphics[width=\figwidth]{../plots/k5-stats-sm/avg_reward.pdf}}
-\subcaptionbox{UCB}{\includegraphics[width=\figwidth]{../plots/k5-stats-ucb/avg_reward.pdf}}
+\subcaptionbox{$\epsilon$-greedy}{\includegraphics[width=\figwidth]{../plots/k5-evaluate/eg_avg_reward.pdf}}
+\subcaptionbox{Softmax}{\includegraphics[width=\figwidth]{../plots/k5-evaluate/sm_avg_reward.pdf}}
+\subcaptionbox{UCB}{\includegraphics[width=\figwidth]{../plots/k5-evaluate/ucb_avg_reward.pdf}}
 \caption{各戦略の正規平均報酬}\label{fig:cmp:avg}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\subcaptionbox{$\epsilon$-greedy}{\includegraphics[width=\figwidth]{../plots/k5-stats-eg/cdr.pdf}}
-\subcaptionbox{Softmax}{\includegraphics[width=\figwidth]{../plots/k5-stats-sm/cdr.pdf}}
-\subcaptionbox{UCB}{\includegraphics[width=\figwidth]{../plots/k5-stats-ucb/cdr.pdf}}
+\subcaptionbox{$\epsilon$-greedy}{\includegraphics[width=\figwidth]{../plots/k5-evaluate/eg_cdr.pdf}}
+\subcaptionbox{Softmax}{\includegraphics[width=\figwidth]{../plots/k5-evaluate/sm_cdr.pdf}}
+\subcaptionbox{UCB}{\includegraphics[width=\figwidth]{../plots/k5-evaluate/ucb_cdr.pdf}}
 \caption{各戦略の正規平均正答率}\label{fig:cmp:cdr}
 \end{figure}
 
@@ -279,29 +279,20 @@ Random を除き各戦略に対し，区間 $P = [0, 1] \subset \R$ から等間
   \end{tabular}
 \end{table}
 
-本実験においても正規平均報酬及び正規平均正答率を求め， \cref{fig:mach:avg,fig:mach:cdr} に示した．
+本実験においても正規平均報酬及び正規平均正答率を求め， \cref{fig:mach} に示した．
 
 \begin{figure}[H]
 \centering
-\subcaptionbox{$S_1$}{\includegraphics[width=\figwidth]{../plots/k6-stats-1/avg_reward.pdf}}
-\subcaptionbox{$S_2$}{\includegraphics[width=\figwidth]{../plots/k6-stats-2/avg_reward.pdf}}
-\subcaptionbox{$S_3$}{\includegraphics[width=\figwidth]{../plots/k6-stats-3/avg_reward.pdf}}
-\caption{各設定における正規平均報酬}\label{fig:mach:avg}
+\subcaptionbox{平均報酬\label{fig:mach:avg_reward}}{\includegraphics[width=\figwidth]{../plots/k6/avg_reward.pdf}}
+\subcaptionbox{平均正答率\label{fig:mach:cdr}}{\includegraphics[width=\figwidth]{../plots/k6/cdr.pdf}}
+\caption{各設定における実験結果}\label{fig:mach}
 \end{figure}
 
-\begin{figure}[H]
-\centering
-\subcaptionbox{$S_1$}{\includegraphics[width=\figwidth]{../plots/k6-stats-1/cdr.pdf}}
-\subcaptionbox{$S_2$\label{fig:mach:cdr:s2}}{\includegraphics[width=\figwidth]{../plots/k6-stats-2/cdr.pdf}}
-\subcaptionbox{$S_3$}{\includegraphics[width=\figwidth]{../plots/k6-stats-3/cdr.pdf}}
-\caption{各設定における正規平均正答率}\label{fig:mach:cdr}
-\end{figure}
-
-どの設定においても正規平均報酬はいずれ最適値に収束するが，設定 $S_2$ における正答率 (図~\ref{fig:mach:cdr:s2}) には一見不思議な現象が起きている．平均報酬が最適値に収束しているにもかかわらず正答率が 1 に近づくどころか，かなりのノイズを示しながら $0.6$-$0.7$ 台に留まっている．この背景には設定にのマシン 3 と 4 の当たる確率が非常に近い値になっていることが影響していると考えられる． 2 つ (以上の) マシンが近い確率を持っているとき，それぞれの期待値に有意な差が出るのに比較的多くの試行が必要である．というのは，試行が足りないと例えば 4 番目のマシンの期待値が最初に大きく，頻繁に選ばれることになり， 3 番目のマシンがそれに勝つまでには時間がかかる．ここで少し極端な話をすると，仮に $\alpha = 0$ の場合であれば補正項の影響が一切無く，最初に 4 番目のマシンの期待値が勝てば UCB 戦略は完全に騙され，最適である 3 番目のマシンに収束しない．他方，$ \alpha = \infty$ であるとすれば，それぞれのマシンの良さが全て等価になり， Random 戦略と同じ結果が得られると考えられる．すなわち， $\alpha$ は UCB 戦略において探索と活用の対比を表すものであり，それを変えてみると上記の現象が改善されると考えられる．
+どの設定においても正規平均報酬はいずれ最適値に収束するが，設定 $S_2$ における正答率 (図~\ref{fig:mach:cdr}) には一見不思議な現象が起きている．平均報酬が最適値に収束しているにもかかわらず正答率が 1 に近づくどころか，かなりのノイズを示しながら $0.6$-$0.7$ に留まっている．この背景には設定にのマシン 3 と 4 の当たる確率が非常に近い値になっていることが影響していると考えられる． 2 つ (以上の) マシンが近い確率を持っているとき，それぞれの期待値に有意な差が出るのに比較的多くの試行が必要である．というのは，試行が足りないと例えば 4 番目のマシンの期待値が最初に大きく，頻繁に選ばれることになり， 3 番目のマシンがそれに勝つまでには時間がかかる．ここで少し極端な話をすると，仮に $\alpha = 0$ の場合であれば補正項の影響が一切無く，最初に 4 番目のマシンの期待値が勝てば UCB 戦略は完全に騙され，最適である 3 番目のマシンに収束しない．他方，$ \alpha = \infty$ であるとすれば，それぞれのマシンの良さが全て等価になり， Random 戦略と同じ結果が得られると考えられる．すなわち， $\alpha$ は UCB 戦略において探索と活用の対比を表すものであり，それを変えてみると上記の現象が改善されると考えられる．
 
 \section{未知のスロットマシンから最適なマシンを求める実験}\label{sec:hk1}
 
-最後に，未知のスロットマシンに対し UCB 戦略を用いて最適なマシンを求めた実験について簡単に述べる．本実験では ライブラリ として実装された 3 パターンのスロットマシン環境に対し各環境において， $\alpha = 0.18$ をパラメータとし UCB 戦略で $N = 10000$ 回のシミュレーションを 100 回行った．なお，このライブラリの都合上平均正答率が得られるのは 1 実行において 1 回のみであるため， 100 回のシミュレーションを実現するのにプログラムを 100 回実行したことに注意する．また，最適なマシンとしては各シミュレーションにおいて平均報酬 $\hmukn$ が最大となるマシンを選択した．
+最後に，未知のスロットマシンに対し UCB 戦略を用いて最適なマシンを求めた実験について簡単に述べる．本実験では ライブラリ として実装された 3 パターンのスロットマシン環境に対し各環境において， $\alpha = 0.18$ をパラメータとし UCB 戦略で $N = 10000$ 回のシミュレーションを 1000 回行った．なお，このライブラリの都合上平均正答率が得られるのは 1 実行において 1 回のみであるため， 1000 回のシミュレーションを実現するのにプログラムを 1000 回実行したことに注意する．また，最適なマシンとしては各シミュレーションにおいて平均報酬 $\hmukn$ が最大となるマシンを選択した．
 
 それぞれの環境に対し以下の情報が既知だと仮定した．
 \begin{enumerate}
@@ -313,28 +304,27 @@ Random を除き各戦略に対し，区間 $P = [0, 1] \subset \R$ から等間
 
 \begin{figure}[H]
 \centering
-\subcaptionbox{最適なマシン．環境 $M_1$ においては 7 台目， $M_2$ においては 6 台目， $M_3$ においては1 台目が最適となった．\label{fig:hk1:machines}}{\includegraphics[width=\figwidth]{../plots/kadv-1/best_machine.pdf}}
-\subcaptionbox{平均報酬\label{fig:hk1:avg_reward}}{\includegraphics[width=\figwidth]{../plots/kadv-1/adv_avg_reward.pdf}}
-\subcaptionbox{平均正答率\label{fig:hk1:cdr}}{\includegraphics[width=\figwidth]{../plots/kadv-1/adv_cdr.pdf}}
+\subcaptionbox{最適なマシン．環境 $M_1$ においては 7 台目， $M_2$ においては 6 台目， $M_3$ においては1 台目が最適となった．\label{fig:hk1:machines}}{\includegraphics[width=\figwidth]{../plots/kadv1/best_machine.pdf}}
+\subcaptionbox{平均報酬\label{fig:hk1:avg_reward}}{\includegraphics[width=\figwidth]{../plots/kadv1/adv_avg_reward.pdf}}
+\subcaptionbox{平均正答率\label{fig:hk1:cdr}}{\includegraphics[width=\figwidth]{../plots/kadv1/adv_cdr.pdf}}
 \caption{各環境における実験結果}\label{fig:hk1}
 \end{figure}
 
-環境 $M_1$ では特に面白い結果が現れなく， UCB 戦略が通常通り最適なマシンに収束したと考えられる．環境 $M_2$ では 1 回のみ収束値から離れ，正答率がほぼ 0 になる現象が発生しているが，平均報酬は僅かに変わる． $M_2$ では最適なマシンとその次に良いマシンの当たる確率が小さいため，この現象ではランダム性により UCB 戦略が 2 番目に良い戦略に収束していると考えられる．しかし面白いのが $M_3$ である．この環境でスロットマシンは時間 (厳密には試行回数) につれて当たる確率が変わっていくので，正答率が 0.3 前後になることは容易に想定できる．一方平均報酬を見ると 0.8 前後に収まっていることから，正答率が低くても得られる報酬が高いことが分かる．
+環境 $M_1$ では特に面白い結果が現れなく， UCB 戦略が通常通り最適なマシンに収束したと考えられる．環境 $M_2$ では 1 回のみ収束値から離れ，正答率がほぼ 0 になる現象が発生しているが，平均報酬は僅かにしか変わらない． $M_2$ では最適なマシンとその次に良いマシンの当たる確率が小さいため，この現象ではランダム性により UCB 戦略が 2 番目に良い戦略に収束していると考えられる．しかし面白いのが $M_3$ である．この環境でスロットマシンは時間 (厳密には試行回数) につれて当たる確率が変わっていくので，正答率が 0.25 前後になることは容易に想定できる．一方平均報酬を見ると 0.75 前後に収まっていることから，正答率が低くても得られる報酬が高いことが分かる．
 
 ここで UCB が最も多く収束した 1 台目のマシンを考える．まず， シミュレーション内の $N = 10000$ 回のうち，本の数回だけで UCB が収束し，残りの回では常に $ a = 1 $ 台目のマシンが選択されると仮定する．この仮定は厳密には正確でないが，概ねの流れを十分に簡略化したものだと考えられる． $a$ が最適なマシンのときの当たる確率を $x$，最適なマシンでないときの確率を $y$ とすると，以下の等式を立てることができる．
 \begin{align}
-  0.3x + 0.7y &= 0.8 \\
-  0.3x &= 0.8 - 0.7y \\
-  x &= \frac{0.8}{0.3} - \frac{0.7}{0.3}y \\
-  x &= 2.66 - 2.33y
+  0.25x + 0.75y &= 0.75 \\
+  0.25x &= 0.75 - 0.75y \\
+  x &= 3(1 - y) \\
 \end{align}
 ここで $0 \leq x, y \leq 1$ という制約が働くので，不等式
 \begin{align}
-  2.66 - 2.33y &< 1 \\
-  1.66 &< 2.33y \\
-  0.7 &< y
+  3(1 - y) &< 1 \\
+  1 - y &< 0.33 \\
+  0.67 &< y
 \end{align}
-を解くと， $y$ の下限が $0.7$ 程である条件が得られる．つまり，マシンの当たる確率が変わったとしても，その変動が比較的少ないことがわかる．
+を解くと， $y$ の下限が $0.67$ 程である条件が得られる．つまり，マシンの当たる確率が変わったとしても，その変動が比較的小さいことがわかる．
 
 上述の通りこのモデルは当然厳密なものではなく，他のマシンの影響や $a$ の当たる確率の厳密な変動を非常に簡略化したものであるが，環境 $M_3$ の概ねの様子を十分に解説できたものだと考えられる．
 \section{結論}\label{sec:end}

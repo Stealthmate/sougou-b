@@ -2,11 +2,11 @@
 #include "Metrics.hpp"
 #include "Kadai.hpp"
 #include "Util.hpp"
-#include "Experiment.hpp"
 
 class MuMonitor: public MachineScoreMonitor {
 public:
-  virtual void initialize(const Strategy &strat, unsigned int n) {
+  virtual void initialize(const Strategy &strat, const SimulationEnvironment &senv) {
+    (void) senv;
     this->strat = dynamic_cast<const EpsilonGreedyStrategy*>(&strat);
   }
 
@@ -22,7 +22,5 @@ int main() {
 
   const double EPSILON = 0.8;
   std::shared_ptr<MuMonitor> mon = std::make_shared<MuMonitor>();
-  auto hist = run_epsilon_greedy(MACHINES, N, EPSILON, std::static_pointer_cast<Monitor>(mon));
-
-  print_simulation_results(hist, mon);
+  test_strat(EG, EPSILON, std::static_pointer_cast<MachineScoreMonitor>(mon));
 }

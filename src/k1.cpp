@@ -1,4 +1,3 @@
-#include "Experiment.hpp"
 #include "Kadai.hpp"
 #include "Metrics.hpp"
 
@@ -6,6 +5,5 @@
 
 int main() {
   init();
-  auto hist = run_random(MACHINES, N, nullptr);
-  print_simulation_results(hist);
+  test_strat(RAND, 0, nullptr);
 }

@@ -1,11 +1,12 @@
+#include "UCBStrategy.hpp"
 #include "Metrics.hpp"
 #include "Kadai.hpp"
 #include "Util.hpp"
-#include "Experiment.hpp"
 
 class FMonitor: public MachineScoreMonitor {
 public:
-  virtual void initialize(const Strategy &strat, unsigned int n) {
+  virtual void initialize(const Strategy &strat, const SimulationEnvironment &senv) {
+    (void) senv;
     this->strat = dynamic_cast<const UCBStrategy*>(&strat);
   }
 
@@ -21,7 +22,5 @@ int main() {
 
   const double ALPHA = 1.0;
   std::shared_ptr<FMonitor> mon = std::make_shared<FMonitor>();
-  auto hist = run_ucb(MACHINES, N, ALPHA, std::static_pointer_cast<Monitor>(mon));
-
-  print_simulation_results(hist, mon);
+  test_strat(UCB, ALPHA, std::static_pointer_cast<MachineScoreMonitor>(mon));
 }

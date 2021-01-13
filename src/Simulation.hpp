@@ -7,20 +7,29 @@
 #include "SlotMachine.hpp"
 #include "Strategy.hpp"
 
+struct SimulationEnvironment {
+  unsigned int n;
+  std::vector<SlotMachine> machines;
+
+  SimulationEnvironment(unsigned int n, const std::vector<SlotMachine> &machines);
+  SimulationEnvironment(const SimulationEnvironment &senv) =default;
+};
+
 struct Attempt {
   bool result;
   unsigned int machine;
 };
 
 struct SimulationHistory {
-  std::vector<SlotMachine> machines;
-  unsigned int n;
+  SimulationEnvironment senv;
   std::vector<Attempt> attempts;
+  SimulationHistory(const SimulationEnvironment &senv);
+  SimulationHistory(const SimulationHistory &hist) =default;
 };
 
 class Monitor {
 public:
-  virtual void initialize(const Strategy &strat, unsigned int n);
+  virtual void initialize(const Strategy &strat, const SimulationEnvironment &senv);
   virtual void monitor_attempt(unsigned int i, const Attempt &attempt);
 };
 
@@ -35,9 +44,8 @@ public:
 
 SimulationHistory run_single
 (
- const std::vector<SlotMachine> &machines,
+ const SimulationEnvironment &senv,
  Strategy &strat,
- unsigned int n,
  std::shared_ptr<Monitor> monitor
  );
 

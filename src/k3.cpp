@@ -2,11 +2,11 @@
 #include "Metrics.hpp"
 #include "Kadai.hpp"
 #include "Util.hpp"
-#include "Experiment.hpp"
 
 class RhoMonitor: public MachineScoreMonitor {
 public:
-  virtual void initialize(const Strategy &strat, unsigned int n) {
+  virtual void initialize(const Strategy &strat, const SimulationEnvironment &senv) {
+    (void) senv;
     this->strat = dynamic_cast<const SoftmaxStrategy*>(&strat);
   }
 
@@ -22,7 +22,5 @@ int main() {
 
   const double TAU = 0.5;
   std::shared_ptr<RhoMonitor> mon = std::make_shared<RhoMonitor>();
-  auto hist = run_softmax(MACHINES, N, TAU, std::static_pointer_cast<Monitor>(mon));
-
-  print_simulation_results(hist, mon);
+  test_strat(SM, TAU, std::static_pointer_cast<MachineScoreMonitor>(mon));
 }
