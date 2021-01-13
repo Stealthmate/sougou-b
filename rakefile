@@ -202,6 +202,15 @@ file 'report/rp.pdf' => 'report/rp.dvi' do |t|
   sh "cd report && dvipdfmx rp"
 end
 
+file '18TI018-final.zip' =>
+     [
+       *FileList['src/*.cpp', 'src/*.hpp', 'plots/**/*.pdf', 'gnuplot/*.p'],
+       "report/rp.tex",
+       "report/rp.pdf"
+     ] do |t|
+  sh "rm -f #{t.name}"
+  sh "zip #{t.name} #{t.prerequisites.join(' ')}"
+end
 
 task :clean_bin do |t|
   sh "rm -f bin/k1 bin/k2 bin/k3 bin/k4"
